@@ -1,5 +1,5 @@
 {
-  "@context": "https://w3id.org/laquereric/cpcp/ns#",
+  "@context": "https://w3id.org/cpcp/ns#",
   "standard": "JSON-RPC-LD-PS1",
   "title": "PubSubStandard_1",
   "cpcps": [],
