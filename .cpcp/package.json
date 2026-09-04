@@ -1,0 +1,15 @@
+{
+  "kind": "cpcp-registry",
+  "version": 1,
+  "name": "cpcp_registry",
+  "description": "Method and seam registries plus PS1 naming and versioning for the CPCP contract.",
+  "contract": {
+    "repo": "https://github.com/laquereric/coordination-protocol-contract-package",
+    "note": "Registries index the contract; drift between registry entries and the contract spec is a bug, reported against this repo."
+  },
+  "registries": {
+    "profiles": "registry.json",
+    "methods": "registry/methods.json",
+    "seams": "registry/seams.json"
+  }
+}
