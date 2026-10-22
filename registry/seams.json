@@ -87,9 +87,9 @@
       "id": "sandbox",
       "vsock": "guest -> host, port 7000 (CID 2); one JSON-RPC envelope per line",
       "served_by": [
-        "https://github.com/laquereric/iq@bf5416eda576cee2c8c0598c7fa8a0aa2fa9f3cc#Development/UseCase/UC_Mvi/sandbox.py"
+        "https://github.com/laquereric/iq@ba94766f5f5e7572c96d35e55431aa51bb2c5b4c#Development/UseCase/UC_Mvi/sandbox.py"
       ],
-      "authoritative_for": "what a workload in a microVM may read and write across its VM boundary: the inputs the host granted it (PULL) and closed-shape Effects grounded by SHACL and journaled with a receipt (PUSH). The allowlist is the workload's own .cpcp/ manifests and CIDs, signed in its image. Not domain state beyond the Effect's record. Proposed (UC_Mvi): the spec also decides sandbox.up, sandbox.fetch and sandbox.egress.send, which no implementation serves yet, so they are not listed in methods.json.",
+      "authoritative_for": "what a workload in a microVM may read and write across its VM boundary: the inputs the host granted it (PULL) and closed-shape Effects grounded by SHACL and journaled with a receipt (PUSH). The allowlist is the workload's own .cpcp/ manifests and CIDs, signed in its image. Not domain state beyond the Effect's record. Egress (sandbox.fetch, sandbox.egress.send) only under a producer the workload's dependency manifest declares; a send is a closed-shape Effect, journaled and sent once. Proposed (UC_Mvi): all six methods the spec decides are served and listed.",
       "domain_writer": true,
       "bindings": [
         "vsock",

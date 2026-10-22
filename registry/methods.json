@@ -339,6 +339,73 @@
       "note": "Proposed (UC_Mvi). Over vsock, not HTTP: refusals carry no HTTP status. Requires the run's Bearer (unauthenticated)."
     },
     {
+      "operation_iri": "https://w3id.org/cpcp/osi8/sandbox#up",
+      "wire_method": "sandbox.up",
+      "seam": "sandbox",
+      "producer": "sandbox seam (UC_Mvi sandbox.py), host BACK",
+      "consumers": [
+        "MVI workload FRONT (report-agent's examples/python/push_report.py)"
+      ],
+      "params": "{}",
+      "result": "{up: true, pod, operations, egress, durable, contract}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). Over vsock, not HTTP: refusals carry no HTTP status. Requires the run's Bearer (unauthenticated)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/sandbox#fetch",
+      "wire_method": "sandbox.fetch",
+      "seam": "sandbox",
+      "producer": "sandbox seam (UC_Mvi sandbox.py), host BACK",
+      "consumers": [
+        "MVI workload FRONT (report-agent's examples/python/push_report.py)"
+      ],
+      "params": "{url}: under a producer in the workload's dependency manifest",
+      "result": "{@id: iq:fetch:root/mvi/<pod>/<sha256>, url, status, content_type, digest, content, truncated?, location?}; the producer's answer, a 4xx or 5xx included; the @id may be cited by an Effect",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "missing_params",
+        "authorization_denied",
+        "mvi_producer_unreachable"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). Over vsock, not HTTP: refusals carry no HTTP status. Requires the run's Bearer (unauthenticated). Same scheme, host and port as a declared producer, a path under its own at a / boundary, no .. segment, no credentials; redirects are not followed."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/sandbox#egress.send",
+      "wire_method": "sandbox.egress.send",
+      "seam": "sandbox",
+      "producer": "sandbox seam (UC_Mvi sandbox.py), host BACK",
+      "consumers": [
+        "MVI workload FRONT (report-agent's examples/python/push_report.py)"
+      ],
+      "params": "{url, effect, method?: POST|PUT|PATCH|DELETE} + operationId (PUSH)",
+      "result": "{sent: {@id, digest, method}, answer: {status, ...}, operationId, receipt}; a repeated operationId replays the first and is not sent again",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "operation_id_required",
+        "missing_params",
+        "authorization_denied",
+        "grounding_refused",
+        "mvi_producer_unreachable",
+        "domain_write_refused",
+        "idempotency_not_durable (reported, effect proceeds)"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). Over vsock, not HTTP: refusals carry no HTTP status. Requires the run's Bearer (unauthenticated). The Effect is held to its CID shape as sandbox.effect.put's is, and sent as JSON-LD with the operationId as Idempotency-Key; a producer that does not answer leaves no receipt."
+    },
+    {
       "operation_iri": "https://w3id.org/cpcp/osi8/guest#up",
       "wire_method": "guest.up",
       "seam": "guest",
