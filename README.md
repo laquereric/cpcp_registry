@@ -23,6 +23,8 @@ consumer pins: method registries drift, tags do not move.
   direction parties, shapes, refusals, profiles. Entries flagged
   `native` belong to the demo seam, not an extraction.
 * `registry/seams.json` — live seams, authority, and layer bindings.
+* `registry/cids/` — a seam's own CID, where its implementation is not
+  public, so a template's `reference_instance` can name one an agent can fetch.
 
 Refusals, envelopes, and HTTP mapping live in the
 [contract repo](https://github.com/laquereric/coordination-protocol-contract-package)
