@@ -1,0 +1,100 @@
+{
+  "_provenance": "Published from laquereric/iq@598e8b3d39cfab559d748fd8c78b369927b9d05b, Development/UseCase/UC_Mvi/sandbox.cid.json, so the seam's CID is fetchable outside a private repo (rule 10).",
+  "@context": {
+    "@vocab": "https://w3id.org/cpcp/ns#",
+    "id": "@id",
+    "type": "@type",
+    "prov": "http://www.w3.org/ns/prov#",
+    "operationId": "https://w3id.org/json-rpc-ld/ns#operationId"
+  },
+  "cid": "cid:mvi:sandbox",
+  "kind": "seam",
+  "description": "The sandbox seam: what the host BACK serves a workload FRONT across its VM boundary, over vsock (guest -> host, port 7000, CID 2), one JSON-RPC 2.0 request per line and one CPCP envelope back. A workload is answered only the operations its own manifests declare, and only with the caller Bearer the runtime issued at boot. Served by Development/UseCase/UC_Mvi/sandbox.py in laquereric/iq; registered in cpcp_registry, status proposed.",
+  "binding": "vsock",
+  "auth": "Bearer, issued at boot and handed to the process in guest.process.start; never in the image",
+  "operations": [
+    {
+      "method": "sandbox.up",
+      "face": "pull",
+      "iri": "https://w3id.org/cpcp/osi8/sandbox#up",
+      "iri_status": "intent",
+      "params": {},
+      "result": "{up: true, pod, operations, egress, durable, contract}"
+    },
+    {
+      "method": "sandbox.context.list",
+      "face": "pull",
+      "iri": "https://w3id.org/cpcp/osi8/sandbox#context.list",
+      "iri_status": "intent",
+      "params": {
+        "under": "string (optional): an @id prefix"
+      },
+      "result": "@graph of {@id, type, digest}: the inputs granted to this pod"
+    },
+    {
+      "method": "sandbox.context.get",
+      "face": "pull",
+      "iri": "https://w3id.org/cpcp/osi8/sandbox#context.get",
+      "iri_status": "intent",
+      "params": {
+        "id": "string (required): an @id from sandbox.context.list"
+      },
+      "result": "{@id, type, digest, content, found}"
+    },
+    {
+      "method": "sandbox.fetch",
+      "face": "pull",
+      "iri": "https://w3id.org/cpcp/osi8/sandbox#fetch",
+      "iri_status": "intent",
+      "params": {
+        "url": "string (required): under a producer the workload's dependency manifest declares"
+      },
+      "result": "{@id: iq:fetch:root/mvi/<pod>/<sha256>, url, status, content_type, digest, content, truncated?, location?}: the producer's answer, a 4xx or 5xx included"
+    },
+    {
+      "method": "sandbox.effect.put",
+      "face": "push",
+      "iri": "https://w3id.org/cpcp/osi8/sandbox#effect.put",
+      "iri_status": "intent",
+      "operationId": "required",
+      "params": {
+        "effect": "object (required): JSON-LD held to the closed shape the workload's own CID names for this operation, citing in prov:wasDerivedFrom only inputs it was granted or fetched"
+      },
+      "result": "{@id, digest, operationId, receipt}; a repeated operationId replays the first"
+    },
+    {
+      "method": "sandbox.egress.send",
+      "face": "push",
+      "iri": "https://w3id.org/cpcp/osi8/sandbox#egress.send",
+      "iri_status": "intent",
+      "operationId": "required",
+      "params": {
+        "url": "string (required): under a declared producer",
+        "effect": "object (required): held to its shape as for sandbox.effect.put",
+        "method": "string (optional): POST (the default), PUT, PATCH or DELETE"
+      },
+      "result": "{sent: {@id, digest, method}, answer: {status, ...}, operationId, receipt}; a repeated operationId replays the first and is not sent again"
+    }
+  ],
+  "refusals": {
+    "dispatcher": [
+      "empty_body",
+      "unparseable_json",
+      "unauthenticated",
+      "unknown_operation",
+      "operation_id_required",
+      "missing_params"
+    ],
+    "admission": [
+      "authorization_denied",
+      "grounding_refused"
+    ],
+    "stores": [
+      "domain_write_refused",
+      "idempotency_not_durable (reported, the effect proceeds)"
+    ],
+    "egress": [
+      "mvi_producer_unreachable"
+    ]
+  }
+}
