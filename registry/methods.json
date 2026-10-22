@@ -274,6 +274,183 @@
       "profiles": [],
       "native": true,
       "note": "Demo-seam method, not extracted: the executable reference for PushNote/PullNote CIDs."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/sandbox#context.list",
+      "wire_method": "sandbox.context.list",
+      "seam": "sandbox",
+      "producer": "sandbox seam (UC_Mvi sandbox.py), host BACK",
+      "consumers": [
+        "MVI workload FRONT (report-agent's examples/python/push_report.py)"
+      ],
+      "params": "{under?: @id prefix}",
+      "result": "{@graph: [{@id, type, digest}]} granted to this pod",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). Over vsock, not HTTP: refusals carry no HTTP status. Requires the run's Bearer (unauthenticated)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/sandbox#context.get",
+      "wire_method": "sandbox.context.get",
+      "seam": "sandbox",
+      "producer": "sandbox seam (UC_Mvi sandbox.py), host BACK",
+      "consumers": [
+        "MVI workload FRONT (report-agent's examples/python/push_report.py)"
+      ],
+      "params": "{id}",
+      "result": "{@id, type, digest, content, found} (found: false when not granted)",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "missing_params"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). Over vsock, not HTTP: refusals carry no HTTP status. Requires the run's Bearer (unauthenticated)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/sandbox#effect.put",
+      "wire_method": "sandbox.effect.put",
+      "seam": "sandbox",
+      "producer": "sandbox seam (UC_Mvi sandbox.py), host BACK",
+      "consumers": [
+        "MVI workload FRONT (report-agent's examples/python/push_report.py)"
+      ],
+      "params": "{effect} + operationId (PUSH)",
+      "result": "{@id, digest, operationId, receipt}; a repeated operationId replays the first",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "operation_id_required",
+        "missing_params",
+        "grounding_refused",
+        "domain_write_refused",
+        "idempotency_not_durable (reported, effect proceeds)"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). Over vsock, not HTTP: refusals carry no HTTP status. Requires the run's Bearer (unauthenticated)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/guest#up",
+      "wire_method": "guest.up",
+      "seam": "guest",
+      "producer": "guest agent (UC_Mvi agent/, mvi-agent at /sbin in the VM)",
+      "consumers": [
+        "MVI host runtime (UC_Mvi run.py)"
+      ],
+      "params": "{}",
+      "result": "{protocol: mvi-guest/1, agent}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/guest#process.start",
+      "wire_method": "guest.process.start",
+      "seam": "guest",
+      "producer": "guest agent (UC_Mvi agent/, mvi-agent at /sbin in the VM)",
+      "consumers": [
+        "MVI host runtime (UC_Mvi run.py)"
+      ],
+      "params": "{env?: {string: string}} + operationId (PUSH)",
+      "result": "{operationId, pid, started_at}; once per boot, a repeated operationId replays",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "operation_id_required",
+        "guest_process_exists",
+        "guest_spawn_failed"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/guest#process.signal",
+      "wire_method": "guest.process.signal",
+      "seam": "guest",
+      "producer": "guest agent (UC_Mvi agent/, mvi-agent at /sbin in the VM)",
+      "consumers": [
+        "MVI host runtime (UC_Mvi run.py)"
+      ],
+      "params": "{signal} + operationId (PUSH)",
+      "result": "{operationId, pid, signal}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "operation_id_required",
+        "guest_no_process"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/guest#process.latest",
+      "wire_method": "guest.process.latest",
+      "seam": "guest",
+      "producer": "guest agent (UC_Mvi agent/, mvi-agent at /sbin in the VM)",
+      "consumers": [
+        "MVI host runtime (UC_Mvi run.py)"
+      ],
+      "params": "{}",
+      "result": "{state: none | running | exited, pid?, exit_code? or signal?}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/guest#logs.latest",
+      "wire_method": "guest.logs.latest",
+      "seam": "guest",
+      "producer": "guest agent (UC_Mvi agent/, mvi-agent at /sbin in the VM)",
+      "consumers": [
+        "MVI host runtime (UC_Mvi run.py)"
+      ],
+      "params": "{stream?: stdout | stderr, after?: cursor, max?}",
+      "result": "{stream, text, cursor, truncated}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/guest#shutdown",
+      "wire_method": "guest.shutdown",
+      "seam": "guest",
+      "producer": "guest agent (UC_Mvi agent/, mvi-agent at /sbin in the VM)",
+      "consumers": [
+        "MVI host runtime (UC_Mvi run.py)"
+      ],
+      "params": "{grace_s?} + operationId (PUSH)",
+      "result": "{operationId, shutting_down, grace_s}; TERM, then KILL after grace_s, then power off",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "operation_id_required"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
     }
   ]
 }
