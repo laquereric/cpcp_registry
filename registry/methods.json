@@ -421,7 +421,7 @@
         "unknown_operation"
       ],
       "profiles": [],
-      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
+      "note": "guest is not_a_seam, decided 2026-10-22 (seams.json; UC_Mvi): listed so the IRI is recorded, not served to callers."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/guest#process.start",
@@ -442,7 +442,7 @@
         "guest_spawn_failed"
       ],
       "profiles": [],
-      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
+      "note": "guest is not_a_seam, decided 2026-10-22 (seams.json; UC_Mvi): listed so the IRI is recorded, not served to callers."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/guest#process.signal",
@@ -462,7 +462,7 @@
         "guest_no_process"
       ],
       "profiles": [],
-      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
+      "note": "guest is not_a_seam, decided 2026-10-22 (seams.json; UC_Mvi): listed so the IRI is recorded, not served to callers."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/guest#process.latest",
@@ -480,7 +480,7 @@
         "unknown_operation"
       ],
       "profiles": [],
-      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
+      "note": "guest is not_a_seam, decided 2026-10-22 (seams.json; UC_Mvi): listed so the IRI is recorded, not served to callers."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/guest#logs.latest",
@@ -498,7 +498,7 @@
         "unknown_operation"
       ],
       "profiles": [],
-      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
+      "note": "guest is not_a_seam, decided 2026-10-22 (seams.json; UC_Mvi): listed so the IRI is recorded, not served to callers."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/guest#shutdown",
@@ -517,7 +517,7 @@
         "operation_id_required"
       ],
       "profiles": [],
-      "note": "Proposed (UC_Mvi). guest is not_a_seam (seams.json): listed so the IRI is recorded, not served to callers."
+      "note": "guest is not_a_seam, decided 2026-10-22 (seams.json; UC_Mvi): listed so the IRI is recorded, not served to callers."
     }
   ]
 }

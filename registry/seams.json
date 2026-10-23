@@ -111,7 +111,8 @@
     },
     {
       "id": "guest",
-      "because": "The MVI host runtime driving its own guest's init over vsock (host -> guest, port 7001): process start, signal, latest, logs, shutdown. It grants nothing to a non-deterministic party, so the workload stays a FRONT that serves no seam. Its methods are listed in methods.json under seam \"guest\" so their IRIs are recorded; whether it should be a seam is open (UC_Mvi, proposed)."
+      "because": "The MVI host runtime driving its own guest's init over vsock (host -> guest, port 7001): process start, signal, latest, logs, shutdown. It grants nothing to a non-deterministic party, so the workload stays a FRONT that serves no seam. Its methods are listed in methods.json under seam \"guest\" so their IRIs are recorded; decided not a seam, 2026-10-22 (UC_Mvi slice 24): a seam would make the workload's VM serve one, which a FRONT may not.",
+      "decided": "2026-10-22"
     }
   ],
   "layers": {
