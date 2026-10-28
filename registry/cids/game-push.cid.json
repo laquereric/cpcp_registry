@@ -1,0 +1,188 @@
+{
+  "_provenance": "Published from laquereric/iq@8a23887b59dbea2c295b68bfbe84b55f83c2e653, Development/UseCase/UC_GameSurface/cid/game-push.cid.json, so the seam's CID is fetchable outside a private repo (rule 10).",
+  "@use_case": "Development/UseCase/UC_GameSurface",
+  "@facet": "Agent",
+  "@context": {
+    "@vocab": "https://w3id.org/cpcp/ns#",
+    "id": "@id",
+    "type": "@type",
+    "operationId": "https://w3id.org/json-rpc-ld/ns#operationId"
+  },
+  "cid": "cid:cpcp:spike:game-push",
+  "kind": "push",
+  "description": "Write access to game sessions. Every PUSH names its intent (operationId); a repeat returns the first receipt and does not run again -- so a retried 'step 30 ticks' never steps 60. Receipts are records on the data plane (iq:game:receipt:<operationId>) and outlive the process.",
+  "operations": [
+    {
+      "method": "session.create",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.create",
+      "params": {
+        "sim": "string (required; see game.catalog)",
+        "seed": "integer (optional)",
+        "driver": "'host' | 'client' (optional, default host; 'browser' is accepted as client)"
+      },
+      "operationId": "required",
+      "result": "GameSession"
+    },
+    {
+      "method": "game.act",
+      "iri": "https://w3id.org/cpcp/osi8/game#game.act",
+      "params": {
+        "session": "string (required; host-driven)",
+        "action": "{name, params} closed against the sim's action table (required)"
+      },
+      "operationId": "required",
+      "result": "ActionRecord with live_applied: false and effective.tick -- recorded now, applied on the next step"
+    },
+    {
+      "method": "session.step",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.step",
+      "params": {
+        "session": "string (required; host-driven)",
+        "ticks": "integer 1..3600 (optional, default 1)",
+        "actions": "[{name, params}] (optional, at most 16): recorded at the current tick before stepping, all checked before any is kept -- acting and advancing is one PUSH",
+        "until": "'event' (optional): stop after the first tick that changes score or lives, or ends the game"
+      },
+      "operationId": "required",
+      "result": "Observation after stepping, with stopped: 'ticks' | 'event' | 'over'. The host owns the clock."
+    },
+    {
+      "method": "session.inputs.append",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.inputs.append",
+      "params": {
+        "session": "string (required; client-driven)",
+        "fromTick": "integer, must equal the host's tick",
+        "toTick": "integer >= fromTick",
+        "inputs": "[{tick, action}] ordered within [fromTick, toTick)",
+        "hash": "the browser's state hash at toTick"
+      },
+      "operationId": "required",
+      "result": "ReplayVerdict: the host replays the batch and reports hostHash and match. A client may be a browser at zero latency or an agent running the sim at its own speed: one PUSH, one gate ask, per batch."
+    },
+    {
+      "method": "session.join",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.join",
+      "params": {
+        "session": "string (required): a session of a sim with more than one seat (duo)"
+      },
+      "operationId": "required",
+      "result": "Seat {session, seat, seats}: the next free seat, for an actor holding none (the creator holds seat 0). Co-play, slice 6 step 4."
+    },
+    {
+      "method": "session.match",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.match",
+      "params": {
+        "sim": "string (required): a sim with more than one seat (duo, squad, duo3)"
+      },
+      "operationId": "required",
+      "result": "Seat {session, seat, seats, sim, seed, matched}: a seat in the game of that sim waiting longest for a player (matched: joined), or a new game to wait in, seat 0 (matched: created). Decided in the seam's one queue, so two players matched at once meet in one game. A game a peer seam (GAME_PEERS) holds is refused session_elsewhere {seam, session}: the same intent there takes its seat. Refused not_coplay for a sim of one seat. Slice 26."
+    },
+    {
+      "method": "session.seat.away",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.seat.away",
+      "params": {
+        "session": "string (required): a co-play session",
+        "seat": "integer (required): the seat to say is away, 0..seats-1"
+      },
+      "operationId": "required",
+      "result": "SeatAway {session, seat, away, already, tick}: a seat that holds no open lane (its tab crashed, the seam restarted) is away, said by a seat's holder; the clock goes on the present seats' word, and an Advance is appended at once if they are through. Refused seat_present while its lane is open (it can say it leaves itself), not_seated for an actor holding no seat. Slice 12."
+    },
+    {
+      "method": "session.seat.give",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.seat.give",
+      "params": {
+        "session": "string (required): a co-play session the caller holds a seat of",
+        "seat": "integer (optional, slice 30): another seat, to let go once it has been away -- said away or left, its lane not open -- for GAME_RELEASE_MS; omitted, the caller's own"
+      },
+      "operationId": "required",
+      "result": "SeatGiven {session, seat, tick, freed?}: the caller's seat given up for good -- away and free, the game on the other seats' word and waiting again (session.list); the next to join or match takes it over where it is, its ship and its lane numbered on. A lane of the giver's still open is closed seat_given, and a ticket issued before writes nothing. Refused not_seated for an actor holding no seat. Slice 27. Another seat's (slice 30): freed: true, its record naming who freed it (by); refused seat_present while its lane is open or it is not away, seat_held before GAME_RELEASE_MS (because: awayMs, releaseMs), seat_free for a seat nobody holds."
+    },
+    {
+      "method": "session.rematch",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.rematch",
+      "params": {
+        "session": "string (required): a co-play session the caller holds a seat of"
+      },
+      "operationId": "required",
+      "result": "Rematch {session, from, seat, seats, sim, seed, made}: the next game after this one -- the same sim, a new seed, every seat's holder seated in the seat it held (a seat given up stays free). Made once, by the first holder to ask (made: true); every later ask, from any seat, answers the same game (made: false). The link is recorded (iq:game:session:<id>:next), session.get answers next on this game and prev on that one, and this game is no longer waiting (session.list). Refused not_seated for an actor holding no seat, not_coplay on a solo session. Slice 28."
+    },
+    {
+      "method": "session.seat.invite",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.seat.invite",
+      "params": {
+        "session": "string (required): a co-play session the caller holds a seat of",
+        "actor": "string (required): the identity invited (iq:identity:<name>); null withdraws the invitation to seat",
+        "seat": "integer (optional): the free seat to keep (else the one already kept for them, or the first free for anyone); required to withdraw",
+        "for": "integer (optional, slice 34): ms the invitation stands, 1000..86400000 (default GAME_INVITE_MS, 15 min)"
+      },
+      "operationId": "required",
+      "result": "Invitation {session, seat, actor, seats, until | withdrawn}: a free seat kept for one player -- only they take it (session.join; session.match takes their invitation first, matched: invited), the game is not waiting for anyone else while every free seat is kept, and they find it under their own games (session.list mine: invited). One invitation to a seat: a new one withdraws the last. A seat's record says {actor: null, reserved, by} or {actor: null, withdrawn, by}. Refused not_seated to a stranger, seat_taken for a seat someone holds, already_seated for a player in the game, seats_full when no seat is free; a join with every free seat kept for others is seat_reserved. Slice 33. It lapses at until (slice 34): then the seat is free for anyone, and no longer under the invitee's games; the record carries until, so a restart reads the same lapse, and inviting the same player again renews it."
+    },
+    {
+      "method": "session.channel.open",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.channel.open",
+      "params": {
+        "session": "string (required)",
+        "frames": "the frame digest the caller speaks (required; sim/frames.js DIGEST)",
+        "from": "integer, the first log position wanted (optional, default 0)",
+        "roads": "in order of preference: 'webtransport' | 'quic' (while cpcp-rt runs) | 'websocket' (always)"
+      },
+      "operationId": "required",
+      "result": "ChannelTicket {road, lanes (log; log+hint on webtransport and quic), url (websocket, webtransport) or addr+alpn (quic), certSha256 (the relay's pinned certificate), ticket (single-use; never kept in the receipt), until, frames, from, next, write; on co-play, for a seat's holder, seat and lane (its lane's position)}. spec/channels.md (proposed)."
+    }
+  ],
+  "reasons": [
+    "empty_body",
+    "unparseable_json",
+    "unknown_operation",
+    "missing_params",
+    "unknown_session",
+    "operation_id_required",
+    "grounding_refused",
+    "unknown_sim",
+    "session_driver_mismatch",
+    "tick_out_of_order",
+    "store_refused",
+    "unauthenticated",
+    "no_permit",
+    "out_of_scope",
+    "actor_mismatch",
+    "not_session_owner",
+    "seam_unreachable",
+    "frame_digest_mismatch",
+    "channel_unavailable",
+    "not_coplay",
+    "already_seated",
+    "seats_full",
+    "channel_required",
+    "not_seated",
+    "seat_present",
+    "seat_held",
+    "seat_reserved",
+    "seat_taken",
+    "seat_free",
+    "session_elsewhere"
+  ],
+  "reasons_note": "unknown_session, unknown_sim, session_driver_mismatch, tick_out_of_order and store_refused are seam reasons proposed here; they are not in the contract taxonomy at the pinned revision. store_refused (failure_layer infrastructure) means the data plane refused the PUSH's records; nothing of the PUSH was kept.",
+  "shape_ref": "shapes/game-shapes.ttl: the action shapes generate sim/<sim>.actions.js (shapes.py), which checkAction in sim/kit.js enforces -- README finding F5",
+  "auth": "Every request carries a credential: Authorization: Bearer <token>, or none while the seam binds loopback, which is then the box's (IQ_CARD_TOKEN_FILE / ~/.iq/harness-token). The gate's /whoami names the subject. Every PUSH is asked of the gate's /push as tool card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld and observed. A receipt answers only the actor whose intent it was (actor_mismatch); a session is acted on only by its creator (not_session_owner). failure_layer authorization, or infrastructure for seam_unreachable.",
+  "channel_reasons": {
+    "at connect": [
+      "ticket_refused (HTTP 401)"
+    ],
+    "close (code 4000, reason as text)": [
+      "channel_read_only",
+      "seq_taken",
+      "seq_gap",
+      "frame_unexpected",
+      "unknown_frame",
+      "frame_malformed",
+      "frame_truncated",
+      "tick_out_of_order",
+      "store_refused",
+      "server_error",
+      "unknown_session",
+      "road_closed",
+      "seat_given"
+    ]
+  }
+}

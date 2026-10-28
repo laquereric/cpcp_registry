@@ -518,6 +518,832 @@
       ],
       "profiles": [],
       "note": "guest is not_a_seam, decided 2026-10-22 (seams.json; UC_Mvi): listed so the IRI is recorded, not served to callers."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#game.catalog",
+      "wire_method": "game.catalog",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "pull CLI (UC_GameSurface examples/pull.mjs, any method)",
+        "tests (UC_GameSurface test/*.mjs)"
+      ],
+      "params": "{} (PULL)",
+      "result": "{@graph: [GameSim {sim, tickHz, seats, actions}]}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. IRI as the seam's own CID declares it (game#game.catalog), not the registry's prefix-stripped form (game#catalog)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.get",
+      "wire_method": "session.get",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page FRONT (UC_GameSurface front/front.js)",
+        "game page seat panel (UC_GameSurface front/seat.js)",
+        "game page channel client (UC_GameSurface front/channel.js)",
+        "<iq-game> element (UC_WebComponents front/game.js)",
+        "client-driven agent (UC_GameSurface examples/client-agent.mjs)",
+        "seat agent (UC_GameSurface examples/seat-agent.mjs)",
+        "tests (UC_GameSurface test/*.mjs)",
+        "surface facade on the game seam (surface.* translated by seam/surface.js): surface.get"
+      ],
+      "params": "{session} (PULL)",
+      "result": "GameSession {session, sim, seed, driver, tick, tickHz, hash, over, inputs, log, prev?, next?; co-play: seats, seated, lanes[{seat, held, holder?, reserved?, open, away, through, awayMs?, quietMs?}], releaseMs}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "missing_params",
+        "unknown_session",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#game.observe",
+      "wire_method": "game.observe",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "host-driven agent (UC_GameSurface examples/agent.mjs)",
+        "tests (UC_GameSurface test/*.mjs)",
+        "surface facade on the game seam (surface.* translated by seam/surface.js): surface.observe"
+      ],
+      "params": "{session} (PULL)",
+      "result": "Observation {session, hash, ...sim.observe(state)}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "missing_params",
+        "unknown_session",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. IRI as the CID declares it (game#game.observe). The page's webmcpld tool observe-game carries the same @id but answers in the tab, never calling the seam."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.inputs.since",
+      "wire_method": "session.inputs.since",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page FRONT (UC_GameSurface front/front.js)",
+        "<iq-game> element (UC_WebComponents front/game.js)",
+        "tests (UC_GameSurface test/*.mjs)",
+        "surface facade on the game seam (surface.* translated by seam/surface.js): surface.inputs.since, surface.replay"
+      ],
+      "params": "{session, cursor?: int >= 0 (default 0)} (PULL)",
+      "result": "InputLog {session, sim, seed, tick, hash, cursor (next), inputs[cursor:]}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "missing_params",
+        "unknown_session",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.series",
+      "wire_method": "session.series",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page FRONT (UC_GameSurface front/front.js)",
+        "seat agent (UC_GameSurface examples/seat-agent.mjs)",
+        "tests (UC_GameSurface test/*.mjs)"
+      ],
+      "params": "{session} (PULL)",
+      "result": "Series {session, game, games, truncated?, @graph: [SeriesGame {game, session, seed, tick, score, over, hash, next?}]}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "missing_params",
+        "unknown_session",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.list",
+      "wire_method": "session.list",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page FRONT (UC_GameSurface front/front.js)",
+        "peer game seams (seam/server.js peerWaiting, here: true, GAME_PEERS)",
+        "tests (UC_GameSurface test/*.mjs)"
+      ],
+      "params": "{sim?, mine?: bool, here?: bool} (PULL)",
+      "result": "OpenGames {sim?, @graph: [OpenGame {session, sim, seats, seated, players, tick, seam, since}]} | with mine: MyGames {@graph: [MyGame {session, sim, seats, seated, seat, open | invited, until?, tick?, loaded?, seam, used}]}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "unknown_sim",
+        "grounding_refused",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.create",
+      "wire_method": "session.create",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page FRONT (UC_GameSurface front/front.js)",
+        "<iq-game> element (UC_WebComponents front/game.js)",
+        "host-driven agent (UC_GameSurface examples/agent.mjs)",
+        "client-driven agent (UC_GameSurface examples/client-agent.mjs)",
+        "seat agent (UC_GameSurface examples/seat-agent.mjs)",
+        "behave steps (UC_GameSurface features/steps/game_surface_steps.py)",
+        "tests (UC_GameSurface test/*.mjs)"
+      ],
+      "params": "{sim, seed?: int, driver?: host|client|browser} + operationId (PUSH)",
+      "result": "GameSession (as session.get)",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_sim",
+        "grounding_refused",
+        "session_driver_mismatch",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#game.act",
+      "wire_method": "game.act",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "host-driven agent (UC_GameSurface examples/agent.mjs)",
+        "tests (UC_GameSurface test/*.mjs)",
+        "surface facade on the game seam (surface.* translated by seam/surface.js): surface.act"
+      ],
+      "params": "{session, action: {name, params?}} + operationId (PUSH)",
+      "result": "ActionRecord {session, action, recorded: true, live_applied: false, effective: {tick}}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_session_owner",
+        "session_driver_mismatch",
+        "grounding_refused",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). Host-driven sessions only. IRI as the CID declares it (game#game.act). The page's webmcpld steer-ship tool carries the same @id but sets thrust in the tab, never calling the seam."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.step",
+      "wire_method": "session.step",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "host-driven agent (UC_GameSurface examples/agent.mjs)",
+        "behave steps (UC_GameSurface features/steps/game_surface_steps.py)",
+        "tests (UC_GameSurface test/*.mjs)"
+      ],
+      "params": "{session, ticks?: int 1..3600, actions?: [{name, params}] (<= 16), until?: \"event\"} + operationId (PUSH)",
+      "result": "Observation {session, hash, stopped: ticks|event|over, ...sim.observe(state)}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_session_owner",
+        "session_driver_mismatch",
+        "grounding_refused",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.inputs.append",
+      "wire_method": "session.inputs.append",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page FRONT (UC_GameSurface front/front.js)",
+        "<iq-game> element (UC_WebComponents front/game.js)",
+        "client-driven agent (UC_GameSurface examples/client-agent.mjs)",
+        "tests (UC_GameSurface test/*.mjs)"
+      ],
+      "params": "{session, fromTick, toTick, inputs: [{tick, action}], hash} + operationId (PUSH)",
+      "result": "ReplayVerdict {session, tick, clientHash, hostHash, match, score, over}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_session_owner",
+        "session_driver_mismatch",
+        "channel_required",
+        "tick_out_of_order",
+        "grounding_refused",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.join",
+      "wire_method": "session.join",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page FRONT (UC_GameSurface front/front.js)",
+        "seat agent (UC_GameSurface examples/seat-agent.mjs)",
+        "tests (UC_GameSurface test/*.mjs)",
+        "surface facade on the game seam (surface.* translated by seam/surface.js): surface.join"
+      ],
+      "params": "{session} + operationId (PUSH)",
+      "result": "Seat {session, seat, seats}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_coplay",
+        "already_seated",
+        "seat_reserved",
+        "seats_full",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.match",
+      "wire_method": "session.match",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page FRONT (UC_GameSurface front/front.js)",
+        "seat agent (UC_GameSurface examples/seat-agent.mjs)",
+        "tests (UC_GameSurface test/*.mjs)"
+      ],
+      "params": "{sim} + operationId (PUSH)",
+      "result": "Seat {session, seat, seats, sim, seed, matched: invited|joined|created}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_sim",
+        "not_coplay",
+        "already_seated",
+        "seat_reserved",
+        "seats_full",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). session_elsewhere here also names {seam, session}: a peer's waiting game, to be asked there with the same intent."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.seat.away",
+      "wire_method": "session.seat.away",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page seat panel (UC_GameSurface front/seat.js)",
+        "tests (UC_GameSurface test/*.mjs)",
+        "surface facade on the game seam (surface.* translated by seam/surface.js): surface.away"
+      ],
+      "params": "{session, seat: int} + operationId (PUSH)",
+      "result": "SeatAway {session, seat, away: true, already, tick}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_coplay",
+        "not_seated",
+        "grounding_refused",
+        "seat_present",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.seat.give",
+      "wire_method": "session.seat.give",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page seat panel (UC_GameSurface front/seat.js)",
+        "tests (UC_GameSurface test/*.mjs)",
+        "surface facade on the game seam (surface.* translated by seam/surface.js): surface.give"
+      ],
+      "params": "{session, seat?: int} + operationId (PUSH)",
+      "result": "SeatGiven {session, seat, tick, freed?}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_coplay",
+        "not_seated",
+        "grounding_refused",
+        "seat_free",
+        "seat_present",
+        "seat_held",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). After it lands, a writing channel on the given seat is closed seat_given (close code 4000)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.rematch",
+      "wire_method": "session.rematch",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page FRONT (UC_GameSurface front/front.js)",
+        "seat agent (UC_GameSurface examples/seat-agent.mjs)",
+        "tests (UC_GameSurface test/*.mjs)"
+      ],
+      "params": "{session} + operationId (PUSH)",
+      "result": "Rematch {session (the next), from, seat, seats, sim, seed, made}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_coplay",
+        "not_seated",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.seat.invite",
+      "wire_method": "session.seat.invite",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page FRONT (UC_GameSurface front/front.js)",
+        "tests (UC_GameSurface test/*.mjs)",
+        "surface facade on the game seam (surface.* translated by seam/surface.js): surface.invite"
+      ],
+      "params": "{session, actor: string | null (withdraw), seat?: int, for?: int ms 1000..86400000} + operationId (PUSH)",
+      "result": "Invitation {session, seat, actor, seats, until} | {session, seat, actor: null, withdrawn}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_coplay",
+        "not_seated",
+        "grounding_refused",
+        "already_seated",
+        "seat_taken",
+        "seats_full",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/game#session.channel.open",
+      "wire_method": "session.channel.open",
+      "seam": "game",
+      "producer": "game seam (UC_GameSurface seam/server.js), BACK",
+      "consumers": [
+        "game page channel client (UC_GameSurface front/channel.js)",
+        "seat agent (UC_GameSurface examples/seat-agent.mjs)",
+        "tests (UC_GameSurface test/*.mjs)"
+      ],
+      "params": "{session, frames: digest, from?: int, roads?: [websocket|webtransport|quic]} + operationId (PUSH)",
+      "result": "ChannelTicket {sim, road, lanes, url | addr+alpn, certSha256?, certSha256s?, ticket (single-use, redacted in the receipt), until, frames, from, next, write, seat?, lane?, away?}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "unknown_operation",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "frame_digest_mismatch",
+        "channel_unavailable",
+        "grounding_refused",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). Opens a channel (spec/channels.md, proposed): GET /_cpcp/channel/<session>?ticket= upgrades to a WebSocket; a bad ticket is ticket_refused (401), a non-WebSocket request not_a_websocket (400). On the channel, refusals are close frames: channel_read_only, seq_taken, seq_gap, frame_unexpected, unknown_frame, frame_malformed, frame_truncated, tick_out_of_order, unknown_session, seat_given, session_elsewhere, store_refused, server_error, road_closed."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/surface#describe",
+      "wire_method": "surface.describe",
+      "seam": "game",
+      "producer": "game seam's surface facade (UC_GameSurface seam/surface.js on seam/server.js), contract UC_SharedSurface/contract.json",
+      "consumers": [
+        "tests (UC_GameSurface test/surface.mjs)"
+      ],
+      "params": "{} (PULL)",
+      "result": "SurfaceDescription {surface: iq:game, mode: state, sessions: iq:game:session:<id>, capability: mcp:call:card:game:*, methods: [{method, face}]}",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "no_such_method",
+        "grounding_refused"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_SharedSurface contract, slice 9 backend). Served only on the game seam's POST /_cpcp/rpc: translated before dispatch into the native game method, so the gate (card:game:<native>), journal, receipts and refusals are the native method's. The facade's own refusals (no_such_method, grounding_refused, not_supported) are answered before dispatch, always HTTP 200, without asking the gate who the caller is. `surface` names the session (s-<id> or iq:game:session:<id>); `driver` is accepted and unused. Answered by surface.js itself (describe()), no native method and no credential check. A method of the shared-surface contract (UC_SharedSurface contract.json), answered on the game seam's own endpoint by its surface facade (seam/surface.js), translated to the seam's native method before dispatch."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/surface#get",
+      "wire_method": "surface.get",
+      "seam": "game",
+      "producer": "game seam's surface facade (UC_GameSurface seam/surface.js on seam/server.js), contract UC_SharedSurface/contract.json",
+      "consumers": [
+        "tests (UC_GameSurface test/surface.mjs)"
+      ],
+      "params": "{surface} (PULL)",
+      "result": "as session.get",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "no_such_method",
+        "grounding_refused",
+        "unauthenticated",
+        "seam_unreachable",
+        "missing_params",
+        "unknown_session",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_SharedSurface contract, slice 9 backend). Served only on the game seam's POST /_cpcp/rpc: translated before dispatch into the native game method, so the gate (card:game:<native>), journal, receipts and refusals are the native method's. The facade's own refusals (no_such_method, grounding_refused, not_supported) are answered before dispatch, always HTTP 200, without asking the gate who the caller is. `surface` names the session (s-<id> or iq:game:session:<id>); `driver` is accepted and unused. Native method: session.get. A method of the shared-surface contract (UC_SharedSurface contract.json), answered on the game seam's own endpoint by its surface facade (seam/surface.js), translated to the seam's native method before dispatch."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/surface#observe",
+      "wire_method": "surface.observe",
+      "seam": "game",
+      "producer": "game seam's surface facade (UC_GameSurface seam/surface.js on seam/server.js), contract UC_SharedSurface/contract.json",
+      "consumers": [
+        "tests (UC_GameSurface test/surface.mjs)"
+      ],
+      "params": "{surface, driver?} (PULL)",
+      "result": "as game.observe",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "no_such_method",
+        "grounding_refused",
+        "unauthenticated",
+        "seam_unreachable",
+        "missing_params",
+        "unknown_session",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_SharedSurface contract, slice 9 backend). Served only on the game seam's POST /_cpcp/rpc: translated before dispatch into the native game method, so the gate (card:game:<native>), journal, receipts and refusals are the native method's. The facade's own refusals (no_such_method, grounding_refused, not_supported) are answered before dispatch, always HTTP 200, without asking the gate who the caller is. `surface` names the session (s-<id> or iq:game:session:<id>); `driver` is accepted and unused. Native method: game.observe. A method of the shared-surface contract (UC_SharedSurface contract.json), answered on the game seam's own endpoint by its surface facade (seam/surface.js), translated to the seam's native method before dispatch."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/surface#inputs.since",
+      "wire_method": "surface.inputs.since",
+      "seam": "game",
+      "producer": "game seam's surface facade (UC_GameSurface seam/surface.js on seam/server.js), contract UC_SharedSurface/contract.json",
+      "consumers": [
+        "tests (UC_GameSurface test/surface.mjs)"
+      ],
+      "params": "{surface, from?: int} (PULL)",
+      "result": "as session.inputs.since (from -> cursor)",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "no_such_method",
+        "grounding_refused",
+        "unauthenticated",
+        "seam_unreachable",
+        "missing_params",
+        "unknown_session",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_SharedSurface contract, slice 9 backend). Served only on the game seam's POST /_cpcp/rpc: translated before dispatch into the native game method, so the gate (card:game:<native>), journal, receipts and refusals are the native method's. The facade's own refusals (no_such_method, grounding_refused, not_supported) are answered before dispatch, always HTTP 200, without asking the gate who the caller is. `surface` names the session (s-<id> or iq:game:session:<id>); `driver` is accepted and unused. Native method: session.inputs.since. A method of the shared-surface contract (UC_SharedSurface contract.json), answered on the game seam's own endpoint by its surface facade (seam/surface.js), translated to the seam's native method before dispatch."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/surface#replay",
+      "wire_method": "surface.replay",
+      "seam": "game",
+      "producer": "game seam's surface facade (UC_GameSurface seam/surface.js on seam/server.js), contract UC_SharedSurface/contract.json",
+      "consumers": [
+        "tests (UC_GameSurface test/surface.mjs)"
+      ],
+      "params": "{surface, driver?} (PULL)",
+      "result": "as session.inputs.since from cursor 0 (the input log is the replay)",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "no_such_method",
+        "grounding_refused",
+        "unauthenticated",
+        "seam_unreachable",
+        "missing_params",
+        "unknown_session",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_SharedSurface contract, slice 9 backend). Served only on the game seam's POST /_cpcp/rpc: translated before dispatch into the native game method, so the gate (card:game:<native>), journal, receipts and refusals are the native method's. The facade's own refusals (no_such_method, grounding_refused, not_supported) are answered before dispatch, always HTTP 200, without asking the gate who the caller is. `surface` names the session (s-<id> or iq:game:session:<id>); `driver` is accepted and unused. Native method: session.inputs.since. A method of the shared-surface contract (UC_SharedSurface contract.json), answered on the game seam's own endpoint by its surface facade (seam/surface.js), translated to the seam's native method before dispatch."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/surface#join",
+      "wire_method": "surface.join",
+      "seam": "game",
+      "producer": "game seam's surface facade (UC_GameSurface seam/surface.js on seam/server.js), contract UC_SharedSurface/contract.json",
+      "consumers": [
+        "tests (UC_GameSurface test/surface.mjs)"
+      ],
+      "params": "{surface, driver?, apps?: [str]} + operationId (PUSH)",
+      "result": "as session.join",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "no_such_method",
+        "grounding_refused",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_coplay",
+        "already_seated",
+        "seat_reserved",
+        "seats_full",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_SharedSurface contract, slice 9 backend). Served only on the game seam's POST /_cpcp/rpc: translated before dispatch into the native game method, so the gate (card:game:<native>), journal, receipts and refusals are the native method's. The facade's own refusals (no_such_method, grounding_refused, not_supported) are answered before dispatch, always HTTP 200, without asking the gate who the caller is. `surface` names the session (s-<id> or iq:game:session:<id>); `driver` is accepted and unused. Native method: session.join. A method of the shared-surface contract (UC_SharedSurface contract.json), answered on the game seam's own endpoint by its surface facade (seam/surface.js), translated to the seam's native method before dispatch."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/surface#act",
+      "wire_method": "surface.act",
+      "seam": "game",
+      "producer": "game seam's surface facade (UC_GameSurface seam/surface.js on seam/server.js), contract UC_SharedSurface/contract.json",
+      "consumers": [
+        "tests (UC_GameSurface test/surface.mjs)"
+      ],
+      "params": "{surface, act, args?: obj, by?: person|agent, driver?} + operationId (PUSH)",
+      "result": "as game.act (action {name: act, params: args})",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "no_such_method",
+        "grounding_refused",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_session_owner",
+        "session_driver_mismatch",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_SharedSurface contract, slice 9 backend). Served only on the game seam's POST /_cpcp/rpc: translated before dispatch into the native game method, so the gate (card:game:<native>), journal, receipts and refusals are the native method's. The facade's own refusals (no_such_method, grounding_refused, not_supported) are answered before dispatch, always HTTP 200, without asking the gate who the caller is. `surface` names the session (s-<id> or iq:game:session:<id>); `driver` is accepted and unused. Native method: game.act. A method of the shared-surface contract (UC_SharedSurface contract.json), answered on the game seam's own endpoint by its surface facade (seam/surface.js), translated to the seam's native method before dispatch."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/surface#give",
+      "wire_method": "surface.give",
+      "seam": "game",
+      "producer": "game seam's surface facade (UC_GameSurface seam/surface.js on seam/server.js), contract UC_SharedSurface/contract.json",
+      "consumers": [
+        "none yet (surface.give is in no test or caller on the wire; UC_SharedSurface contract.feature names it only)"
+      ],
+      "params": "{surface, args?: {seat}, to?, driver?} + operationId (PUSH)",
+      "result": "as session.seat.give (args.seat -> seat; `to` accepted, unused)",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "no_such_method",
+        "grounding_refused",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_coplay",
+        "not_seated",
+        "seat_free",
+        "seat_present",
+        "seat_held",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_SharedSurface contract, slice 9 backend). Served only on the game seam's POST /_cpcp/rpc: translated before dispatch into the native game method, so the gate (card:game:<native>), journal, receipts and refusals are the native method's. The facade's own refusals (no_such_method, grounding_refused, not_supported) are answered before dispatch, always HTTP 200, without asking the gate who the caller is. `surface` names the session (s-<id> or iq:game:session:<id>); `driver` is accepted and unused. Native method: session.seat.give. A method of the shared-surface contract (UC_SharedSurface contract.json), answered on the game seam's own endpoint by its surface facade (seam/surface.js), translated to the seam's native method before dispatch."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/surface#invite",
+      "wire_method": "surface.invite",
+      "seam": "game",
+      "producer": "game seam's surface facade (UC_GameSurface seam/surface.js on seam/server.js), contract UC_SharedSurface/contract.json",
+      "consumers": [
+        "tests (UC_GameSurface test/surface.mjs)"
+      ],
+      "params": "{surface, actor, args?: {seat}, for_ms?: int, driver?} + operationId (PUSH)",
+      "result": "as session.seat.invite (for_ms -> for)",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "no_such_method",
+        "grounding_refused",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_coplay",
+        "not_seated",
+        "already_seated",
+        "seat_taken",
+        "seats_full",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_SharedSurface contract, slice 9 backend). Served only on the game seam's POST /_cpcp/rpc: translated before dispatch into the native game method, so the gate (card:game:<native>), journal, receipts and refusals are the native method's. The facade's own refusals (no_such_method, grounding_refused, not_supported) are answered before dispatch, always HTTP 200, without asking the gate who the caller is. `surface` names the session (s-<id> or iq:game:session:<id>); `driver` is accepted and unused. Native method: session.seat.invite. A method of the shared-surface contract (UC_SharedSurface contract.json), answered on the game seam's own endpoint by its surface facade (seam/surface.js), translated to the seam's native method before dispatch."
+    },
+    {
+      "operation_iri": "https://w3id.org/cpcp/osi8/surface#away",
+      "wire_method": "surface.away",
+      "seam": "game",
+      "producer": "game seam's surface facade (UC_GameSurface seam/surface.js on seam/server.js), contract UC_SharedSurface/contract.json",
+      "consumers": [
+        "none yet (surface.away appears only in UC_SharedSurface game_steps.py grounding cases, never sent to the seam)"
+      ],
+      "params": "{surface, args?: {seat}, driver?} + operationId (PUSH)",
+      "result": "as session.seat.away (args.seat -> seat)",
+      "refusals": [
+        "empty_body",
+        "unparseable_json",
+        "no_such_method",
+        "grounding_refused",
+        "unauthenticated",
+        "seam_unreachable",
+        "operation_id_required",
+        "actor_mismatch",
+        "gate refusals passed through (no_permit, out_of_scope; cpcp-seam gate.rs)",
+        "missing_params",
+        "unknown_session",
+        "not_coplay",
+        "not_seated",
+        "seat_present",
+        "session_elsewhere",
+        "store_refused",
+        "server_error"
+      ],
+      "profiles": [],
+      "note": "Proposed (UC_SharedSurface contract, slice 9 backend). Served only on the game seam's POST /_cpcp/rpc: translated before dispatch into the native game method, so the gate (card:game:<native>), journal, receipts and refusals are the native method's. The facade's own refusals (no_such_method, grounding_refused, not_supported) are answered before dispatch, always HTTP 200, without asking the gate who the caller is. `surface` names the session (s-<id> or iq:game:session:<id>); `driver` is accepted and unused. Native method: session.seat.away. A method of the shared-surface contract (UC_SharedSurface contract.json), answered on the game seam's own endpoint by its surface facade (seam/surface.js), translated to the seam's native method before dispatch."
     }
   ]
 }
