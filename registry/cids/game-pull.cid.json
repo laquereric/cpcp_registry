@@ -1,0 +1,74 @@
+{
+  "_provenance": "Published from laquereric/iq@8a23887b59dbea2c295b68bfbe84b55f83c2e653, Development/UseCase/UC_GameSurface/cid/game-pull.cid.json, so the seam's CID is fetchable outside a private repo (rule 10).",
+  "@use_case": "Development/UseCase/UC_GameSurface",
+  "@facet": "Agent",
+  "@context": {
+    "@vocab": "https://w3id.org/cpcp/ns#",
+    "id": "@id",
+    "type": "@type",
+    "operationId": "https://w3id.org/json-rpc-ld/ns#operationId"
+  },
+  "cid": "cid:cpcp:spike:game-pull",
+  "kind": "pull",
+  "description": "Read access to game sessions: catalog, session summary, structured observation, and the input log since a cursor (polling, since CPCP has no subscriptions). Reads cost nothing and promise nothing.",
+  "operations": [
+    {
+      "method": "game.catalog",
+      "iri": "https://w3id.org/cpcp/osi8/game#game.catalog",
+      "params": {},
+      "result": "@graph of GameSim: sim id, tickHz, closed action table"
+    },
+    {
+      "method": "session.get",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.get",
+      "params": {
+        "session": "string (required)"
+      },
+      "result": "GameSession: sim, seed, driver, tick, hash, over, inputs count, log (the log's length: a reader's look); prev and next, the games before and after this one (session.rematch, slice 28); on co-play, lanes {seat, held, holder (who holds it, slice 36), open, away, through, awayMs (while away), quietMs (while closed: since its writer's channel shut or the seam loaded the game, slice 35)} and releaseMs (slice 30)"
+    },
+    {
+      "method": "game.observe",
+      "iri": "https://w3id.org/cpcp/osi8/game#game.observe",
+      "params": {
+        "session": "string (required)"
+      },
+      "result": "Observation: the sim's observe() output plus the state hash. This is what an agent gets instead of pixels."
+    },
+    {
+      "method": "session.inputs.since",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.inputs.since",
+      "params": {
+        "session": "string (required)",
+        "cursor": "integer >= 0 (optional, default 0)"
+      },
+      "result": "InputLog: seed, sim, tick, hash, next cursor, and inputs[cursor:]. A viewer re-simulates locally; state never travels."
+    },
+    {
+      "method": "session.list",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.list",
+      "params": {
+        "sim": "string (optional): only games of this sim",
+        "here": "boolean (optional): this seam's games alone, as a peer asks",
+        "mine": "boolean (optional, slice 31): the caller's own games instead"
+      },
+      "result": "OpenGames {@graph: OpenGame {session, sim, seats, seated, players (slice 36), seam, since}}: games waiting for a player -- co-play, not over, a seat free, and someone in it (a lane open, or made in the last GAME_WAIT_MS) -- longest waiting first, this seam's and each peer's (GAME_PEERS, asked as the caller). Slice 26. With mine: true, MyGames {@graph: MyGame {session, sim, seats, seated, seat, open, tick, seam, used}}: the caller's own games -- co-play, not over, not followed by a next game, a seat of the caller's -- most recently in use first, on this seam and its peers; answered from memory, so a game no seam has touched for GAME_IDLE_MS is not listed. Slice 31. Then the caller's games no seam holds, from the store (its side of every seat record; a game over or followed by a next one left out), each loaded: false with no tick or lane, at the seam its last claim names, at most GAME_MINE_MAX. Slice 32."
+    },
+    {
+      "method": "session.series",
+      "iri": "https://w3id.org/cpcp/osi8/game#session.series",
+      "params": {
+        "session": "string (required): any game of the table"
+      },
+      "result": "Series {session, game (this one's place), games, truncated?, @graph: SeriesGame {game, session, seed, tick, score, over, hash, next}}: the chain of rematches through this game, first to last, each as it was played -- live while the seam holds it, else as it stood when its next game was made. The others are read from their records alone: none is loaded or claimed. At most GAME_SERIES_MAX games either way. Slice 29."
+    }
+  ],
+  "reasons": [
+    "empty_body",
+    "unparseable_json",
+    "unknown_operation",
+    "missing_params",
+    "unknown_session",
+    "unknown_sim"
+  ],
+  "shape_ref": "shapes/game-shapes.ttl"
+}
