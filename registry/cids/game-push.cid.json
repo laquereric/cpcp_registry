@@ -1,5 +1,5 @@
 {
-  "_provenance": "Published from laquereric/iq@8a23887b59dbea2c295b68bfbe84b55f83c2e653, Development/UseCase/UC_GameSurface/cid/game-push.cid.json, so the seam's CID is fetchable outside a private repo (rule 10).",
+  "_provenance": "Published from laquereric/iq@9aaae66814f0446fdd9801a47f39ae19437b90c2, Development/UseCase/UC_GameSurface/cid/game-push.cid.json, so the seam's CID is fetchable outside a private repo (rule 10).",
   "@use_case": "Development/UseCase/UC_GameSurface",
   "@facet": "Agent",
   "@context": {
@@ -164,7 +164,7 @@
   ],
   "reasons_note": "unknown_session, unknown_sim, session_driver_mismatch, tick_out_of_order and store_refused are seam reasons proposed here; they are not in the contract taxonomy at the pinned revision. store_refused (failure_layer infrastructure) means the data plane refused the PUSH's records; nothing of the PUSH was kept.",
   "shape_ref": "shapes/game-shapes.ttl: the action shapes generate sim/<sim>.actions.js (shapes.py), which checkAction in sim/kit.js enforces -- README finding F5",
-  "auth": "Every request carries a credential: Authorization: Bearer <token>, or none while the seam binds loopback, which is then the box's (IQ_CARD_TOKEN_FILE / ~/.iq/harness-token). The gate's /whoami names the subject. Every PUSH is asked of the gate's /push as tool card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld and observed. A receipt answers only the actor whose intent it was (actor_mismatch); a session is acted on only by its creator (not_session_owner). failure_layer authorization, or infrastructure for seam_unreachable.",
+  "auth": "Every request carries a credential: Authorization: Bearer <token>, or none while the seam binds loopback, which is then the box's (IQ_CARD_TOKEN_FILE / ~/.iq/harness-token). The gate's /whoami names the subject. Every PUSH is asked of the gate's /push as tool card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld and observed. A receipt answers only the actor whose intent it was (actor_mismatch); a session is acted on only by its creator (not_session_owner). failure_layer http_auth, or infrastructure for seam_unreachable.",
   "channel_reasons": {
     "at connect": [
       "ticket_refused (HTTP 401)"

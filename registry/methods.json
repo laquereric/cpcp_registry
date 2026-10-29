@@ -539,7 +539,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. IRI as the seam's own CID declares it (game#game.catalog), not the registry's prefix-stripped form (game#catalog)."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. IRI as the seam's own CID declares it (game#game.catalog), not the registry's prefix-stripped form (game#catalog)."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.get",
@@ -571,7 +571,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#game.observe",
@@ -598,7 +598,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. IRI as the CID declares it (game#game.observe). The page's webmcpld tool observe-game carries the same @id but answers in the tab, never calling the seam."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. IRI as the CID declares it (game#game.observe). The page's webmcpld tool observe-game carries the same @id but answers in the tab, never calling the seam."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.inputs.since",
@@ -626,7 +626,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.series",
@@ -653,7 +653,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.list",
@@ -679,7 +679,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.create",
@@ -714,7 +714,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#game.act",
@@ -747,7 +747,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). Host-driven sessions only. IRI as the CID declares it (game#game.act). The page's webmcpld steer-ship tool carries the same @id but sets thrust in the tab, never calling the seam."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). Host-driven sessions only. IRI as the CID declares it (game#game.act). The page's webmcpld steer-ship tool carries the same @id but sets thrust in the tab, never calling the seam."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.step",
@@ -780,7 +780,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.inputs.append",
@@ -816,7 +816,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.join",
@@ -851,7 +851,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.match",
@@ -885,7 +885,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). session_elsewhere here also names {seam, session}: a peer's waiting game, to be asked there with the same intent."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). session_elsewhere here also names {seam, session}: a peer's waiting game, to be asked there with the same intent."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.seat.away",
@@ -919,7 +919,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.seat.give",
@@ -955,7 +955,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). After it lands, a writing channel on the given seat is closed seat_given (close code 4000)."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). After it lands, a writing channel on the given seat is closed seat_given (close code 4000)."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.rematch",
@@ -987,7 +987,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.seat.invite",
@@ -1023,7 +1023,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true)."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/game#session.channel.open",
@@ -1056,7 +1056,7 @@
         "server_error"
       ],
       "profiles": [],
-      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer \"authorization\", which is not one of the contract's four layers. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). Opens a channel (spec/channels.md, proposed): GET /_cpcp/channel/<session>?ticket= upgrades to a WebSocket; a bad ticket is ticket_refused (401), a non-WebSocket request not_a_websocket (400). On the channel, refusals are close frames: channel_read_only, seq_taken, seq_gap, frame_unexpected, unknown_frame, frame_malformed, frame_truncated, tick_out_of_order, unknown_session, seat_given, session_elsewhere, store_refused, server_error, road_closed."
+      "note": "Proposed (UC_GameSurface). HTTP POST /_cpcp/rpc on the game seam (Bun, default 127.0.0.1:8787). Every call needs a credential the IQ gate's /whoami names (Bearer, or the box's own on loopback): unauthenticated / seam_unreachable. Refusals ride HTTP 200; with header cpcp-http-status-profile: dual-v1, failure_layer http_request -> 400 and infrastructure -> 500. Auth refusals carry failure_layer http_auth (contract PR #11); under dual-v1 they still ride 200, not the contract's 401/403. PUSH: asked of the gate as card:game:<method> (capability mcp:call:card:game:<method>), journaled in ~/.iq/journal/cards/game.jsonld; receipt iq:game:receipt:<operationId> replays a repeat (replayed: true). Opens a channel (spec/channels.md, proposed): GET /_cpcp/channel/<session>?ticket= upgrades to a WebSocket; a bad ticket is ticket_refused (401), a non-WebSocket request not_a_websocket (400). On the channel, refusals are close frames: channel_read_only, seq_taken, seq_gap, frame_unexpected, unknown_frame, frame_malformed, frame_truncated, tick_out_of_order, unknown_session, seat_given, session_elsewhere, store_refused, server_error, road_closed."
     },
     {
       "operation_iri": "https://w3id.org/cpcp/osi8/surface#describe",
