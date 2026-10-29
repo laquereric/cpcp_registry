@@ -102,10 +102,10 @@
       "id": "game",
       "http": "POST /_cpcp/rpc",
       "served_by": [
-        "https://github.com/laquereric/iq@8a23887b59dbea2c295b68bfbe84b55f83c2e653#Development/UseCase/UC_GameSurface/seam/server.js",
-        "https://github.com/laquereric/iq@8a23887b59dbea2c295b68bfbe84b55f83c2e653#Development/UseCase/UC_GameSurface/seam/gate.js",
-        "https://github.com/laquereric/iq@8a23887b59dbea2c295b68bfbe84b55f83c2e653#Development/UseCase/UC_GameSurface/seam/plane.js",
-        "https://github.com/laquereric/iq@8a23887b59dbea2c295b68bfbe84b55f83c2e653#Development/UseCase/UC_GameSurface/seam/surface.js"
+        "https://github.com/laquereric/iq@9aaae66814f0446fdd9801a47f39ae19437b90c2#Development/UseCase/UC_GameSurface/seam/server.js",
+        "https://github.com/laquereric/iq@9aaae66814f0446fdd9801a47f39ae19437b90c2#Development/UseCase/UC_GameSurface/seam/gate.js",
+        "https://github.com/laquereric/iq@9aaae66814f0446fdd9801a47f39ae19437b90c2#Development/UseCase/UC_GameSurface/seam/plane.js",
+        "https://github.com/laquereric/iq@9aaae66814f0446fdd9801a47f39ae19437b90c2#Development/UseCase/UC_GameSurface/seam/surface.js"
       ],
       "authoritative_for": "game sessions as an input log: each session's seed, driver and creator, its append-only log of inputs and advances (the host's state hash at each), seats and invitations, the next game, receipts per operationId. Sim state is never stored: it is the log's replay. One seam holds a session at a time (claims iq:game:session:<id>:seam:<n>). Admission is the IQ gate's (card:game:<method>), not this seam's. Never renders.",
       "cid": "registry/cids/game-pull.cid.json + registry/cids/game-push.cid.json (served together at GET /_cpcp/cid.json)",
